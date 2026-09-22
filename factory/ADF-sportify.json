@@ -1,0 +1,15 @@
+{
+	"name": "ADF-sportify",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "southindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "a7533739-e068-4c8f-94df-14b8f398c0cc",
+		"tenantId": "7fe50931-da99-4381-bcc1-59d1aecf4c26"
+	}
+}
