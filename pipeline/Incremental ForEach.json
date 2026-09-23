@@ -225,7 +225,7 @@
 												{
 													"type": "Query",
 													"text": {
-														"value": "SELECT MAX(@{item().cdc_col}) as cdc FROM @{item().schema}.@{item().table_name}",
+														"value": "SELECT MAX(@{item().cdc_col}) AS cdc\nFROM @{item().schema}.@{item().table}",
 														"type": "Expression"
 													}
 												}
@@ -317,6 +317,37 @@
 							}
 						}
 					]
+				}
+			},
+			{
+				"name": "Alerts",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "ForEach1",
+						"dependencyConditions": [
+							"Failed",
+							"Succeeded",
+							"Skipped",
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"url": "https://prod-00.southindia.logic.azure.com:443/workflows/286e9b2aad0549229c30f5496f3df16b/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=-pJpySYR0-HUidLspThhI9tG9rbbh2A_GuwV4OxjmxY",
+					"body": {
+						"value": "{\n    \"pipeline_name\":'@{pipeline().Pipeline}',\n    \"pipeline_runid\":'@{pipeline().RunId}'\n}",
+						"type": "Expression"
+					}
 				}
 			}
 		],
